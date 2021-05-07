@@ -1,0 +1,191 @@
+\usepackage{hyperref}
+    \hypersetup{breaklinks=true,colorlinks=true,
+        linkcolor=black,citecolor=black,urlcolor=black}
+
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{tabu}
+\extrarowsep = 1mm
+\usepackage{multirow}
+
+\usepackage[sort&compress,numbers]{natbib}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{pst-solides3d}
+
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{soul}
+
+\usepackage{import}
+
+\usepackage[titletoc,toc,page]{appendix}
+
+%Add code in latex
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{caption}
+
+\usepackage{xr}
+
+%%%%%%%%%%%%%%%%%%%
+% Ticks format %
+%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\tikzset{
+      every picture/.prefix style={
+        execute at begin picture=\shorthandoff{;}
+      }
+    }
+
+\usepackage{pgf}
+\usetikzlibrary{shadows,petri,calc,trees,positioning,arrows,chains,shapes.geometric,
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols}
+
+\tikzset{
+>=stealth',
+  punktchain/.style={
+    rectangle,
+    rounded corners,
+    % fill=black!10,
+    draw=black, very thick,
+    text width=10em,
+    minimum height=3em,
+    text centered,
+    on chain},
+  line/.style={draw, thick, <-},
+  element/.style={
+    tape,
+    top color=white,
+    bottom color=blue!50!black!60!,
+    minimum width=8em,
+    draw=blue!40!black!90, very thick,
+    text width=10em,
+    minimum height=3.5em,
+    text centered,
+    on chain},
+  every join/.style={->, thick,shorten >=1pt},
+  decoration={brace},
+  tuborg/.style={decorate},
+  tubnode/.style={midway, right=2pt},
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Python format %
+%%%%%%%%%%%%%%%%%%%%%
+% Custom colors
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+
+
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{ %
+language=python,                % choose the language of the code
+%basicstyle=\footnotesize,   % the size of the fonts that are used for the code
+basicstyle=\ttfamily\scriptsize,
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+otherkeywords={self},             % Add keywords here
+keywordstyle=\color{deepblue},%
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+morekeywords=[2]{1}, keywordstyle=[2]{\color{deepred}},
+identifierstyle=\color{black},%
+stringstyle=\color{deepgreen},
+commentstyle=\color{mygreen},%
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,           % adds a frame around the code
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=b,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}}
+
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[
+    fileext=los,
+    listname=Lista de C\'odigos,
+    name=C\'odigo,
+    placement=tbhp,
+    within=section,
+]{codigo}
+
+\newtheorem{mydef}{Definition}
+\newtheorem{mytheorem}{Theorem}
+\usepackage[spanish, onelanguage]{algorithm2e}
+% Python environment
+\lstnewenvironment{python}[1][]{
+  \pythonstyle
+  \lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+\iftrue % \iftrue for applying the fix suggestion
+\makeatletter
+\renewcommand*{\add@accent}[2]{%
+  {\ifx#2i\let\bbl@tempa\i\else\let\bbl@tempa#2\relax\fi
+%   fix suggestion, insertion of \relax:       ^^^^^^
+    \setbox\@tempboxa\hbox{\bbl@tempa%
+      \global\mathchardef\accent@spacefactor\spacefactor}%
+    \accent#1\bbl@tempa}\spacefactor\accent@spacefactor}%
+\makeatother
+\fi
+
+
+\usepackage[doublespacing]{setspace}
+
+\setlength{\footnotesep}{0pt}
+\usepackage{pifont}
+\usepackage{bm}
+
+\newcommand{\doublesignature}[5]{%
+  \parbox{\textwidth}{
+    \vspace{1cm}
+    #1\\
+    \vspace{2cm}
+
+    \parbox{7cm}{
+      \centering
+      \rule{6cm}{1pt}\\
+       #2 \\
+       #3
+    }
+    \hfill
+    \parbox{7cm}{
+      \centering
+      \rule{6cm}{1pt}\\
+      #4 \\
+      #5
+    }
+  }
+}
