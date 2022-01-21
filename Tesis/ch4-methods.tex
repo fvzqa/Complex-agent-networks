@@ -1,0 +1,39 @@
+\chapter{Metodología}\label{ch:method}
+
+Se representa una población mediante una red, donde los nodos representan a los individuos y las aristas representan los contactos que surgen entre ellos. 
+
+El modelo base de transmisión es el modelo markoviano SIR, donde cada nodo pertenece a uno y solo uno de los estados \textit{susceptible}, \textit{infeccioso} o \textit{recuperado}, con parámetros $\beta$ (tasa de contagio) y $\gamma$ (tasa de recuperación). Al tiempo $t = 0$, un nodo escogido uniformemente al azar se torna infeccioso, mientras el resto permanece susceptible. Mientras un nodo es infeccioso, tiene contactos infecciosos de manera aleatoria con sus vecinos susceptibles, acorde a procesos independientes de Poisson con tasa $\beta$. Cada nodo permanece infeccioso durante un periodo de tiempo aleatorio con distribución exponencial con parámetro $\gamma$. Pasando su periodo de infección, el nodo pasa a ser recuperado y permanece inmune por el resto del proceso infeccioso, el cual concluye hasta el primer tiempo $t = T_f$ donde haya cero infecciosos. El tamaño final de la epidemia es el número de nodos que hayan resultado infectados durante el proceso, que corresponde con el número de nodos recuperados al tiempo $T_f$. 
+
+\section{Medidas de contingencia}
+El modelo markoviano SIR será modificado para incluir atributos en cada nodo y construir un modelo de epidemia bajo medidas de contingencia.  A saber, en \ref{subsect:vacc} se identificaran nodos influyentes en la topología de la red mediante el algoritmo \texttt{Vote Rank}. En \ref{subsect:fm} se describirá como se ve afectada la epidemia cuando algunos nodos usan cubrebocas, acorde a un nivel de tolerancia al riesgo individual basado en la literatura (\textbf{citar}). En \ref{subsect:aisl}, los nodos tendrán conocimiento de la infección propia y de vecinos, y decidirán aislarse acorde a esto. 
+
+\subsection{Vacunación}\label{subsect:vacc}
+Una de las medidas de contención en una epidemia es la de vacunar a la población. La vacunación es un proceso costoso tanto por suministros como en logística, por lo que a veces resulta preferible escoger con cuidado a qué sectores de la población se inoculará. Usando el algoritmo \texttt{Vote Rank} de la librería \texttt{NetworkX}, se identifican a los nodos más influyentes del grafo, y se les identifica como recuperados desde el inicio de la epidemia. 
+A su vez, comparamos los resultados anteriores con un modelo en el que se inoculan a elementos arbitrarios de la población, para medir la importancia de escoger con cuidado a los individuos a vacunarse. 
+
+\subsection{Cubrebocas}\label{subsect:fm}
+Se escogen distintas fracciones aleatorias de la población para adoptar el uso de cubrebocas, cuyo impacto en la infectividad se refleja usando una tasa de contagio $\beta_{fm} : \beta_{fm} < \beta$ para estos nodos. Se compara el tamaño final de la epidemia en poblaciones con distintos porcentajes de adopción de cubrebocas. 
+
+\subsection{Aislamiento}\label{subsect:aisl}
+\citet{cerami2021risk} menciona el nivel de aversión al riesgo a la salud que suele observarse en una población, dividiendo a la población de la forma descrita en el cuadro \ref{table:perfil_riesgo}. Basado en este perfil, a los nodos de la red se les asignará una actitud ante la toma de riesgos y se aislarán de forma acorde. Específicamente, el aislamiento consistirá en particionar todos los aristas entre \textit{abiertos} y \textit{cerrados}, donde la infección solo puede pasarse de un nodo infeccioso a uno susceptible cuando estén unidos por una arista abierta. Acorde a su perfil de riesgo, un nodo que pase a infeccioso, cerrará un porcentaje de las aristas incidentes en él.  
+
+\begin{table}
+\caption{Distribución de perfiles de riesgo en una población \citep{cerami2021risk}.}
+\label{table:perfil_riesgo}
+\centering
+\begin{tabular}{||c c||}
+ \hline
+ Actitud ante toma de riesgos & Distribución \\[0.5ex] 
+ \hline\hline
+ Amante al riesgo & 51.6\% \\ 
+ \hline
+ Neutral al riesgo & 14.6\% \\
+ \hline
+ Ligeramente averso al riesgo &  24.6\%\\
+ \hline
+ Altamente averso al riesgo & 9.2\% \\  [1ex] 
+ \hline
+\end{tabular}
+\end{table}
+
+
